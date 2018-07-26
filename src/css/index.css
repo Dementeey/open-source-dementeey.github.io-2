@@ -19,6 +19,9 @@
   --grid-item-shadow-color:              rgba(94, 93, 93, 0.228);
   --grid-item-img-border-color:          #c9c1c1;
   --grid-hover-description-shadow-color: rgba(0,0,0, .1);
+
+  --modal-overlay-color:                 rgba(15, 13, 13, 0.8);
+
 }
 
 html {
@@ -58,7 +61,6 @@ body {
   transition: 1s;
 }
 
-
 .goToTop-btn::after {
   content: "";
   position: absolute;
@@ -89,7 +91,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 100;
 
   display: flex;
   flex-direction: row;
@@ -143,10 +145,6 @@ body {
 .page-header__link:active {
   color: var(--page-header-color-active);
 }
-
-
-
-
 
 .animate-contnetn {
   position: absolute;
@@ -299,24 +297,14 @@ body {
 
 .work__grid-items {
   position: relative;
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: -1em 0 1em -0.5em;
   padding: 0;
-
+  width: 65%;
+  margin: 0 auto;
   list-style-type: none;
 }
 
 .work__grid-item {
   position: relative;
-
-  flex: 1 0 20em;
-  width: auto;
-  max-width: 20em;
-  margin: initial;
-  padding: 1em 0 0 0.5em;
 
   background-color: var(--grid-item-bg-color);
 }
@@ -325,7 +313,7 @@ body {
   .work__grid-items {
     display: grid;
     margin: initial;
-
+    width: 100%;
     grid-auto-flow: dense;
     /* grid-template-columns: repeat(auto-fit, 1fr ); */
     grid-auto-rows: 150px;
@@ -427,7 +415,6 @@ body {
 
 }
 
-
 .work__grid-link {
   display: block;
   width: 100%;
@@ -494,26 +481,170 @@ body {
 
 .modal {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  z-index: 99999;
+  font-size: 1rem;
+  width: 70vw;
+  height: 80vh;
 
-  width: 100vw;
-  height: 100vh;
+  overflow-y: auto;
+
+  border: 1px solid var(--page-header-top-shadow-color);
+
+  background-color: var(--page-header-top-bg-color);
+  color: var(--page-header-color);
+  box-shadow:  0 0  15px 3px var(--page-header-top-shadow-color);
+  transform: translate(-50%, -50%);
+
+}
+
+@media screen and (max-width: 480px) {
+  .modal {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+.no-touch .modal {
+  /* animation: modal-bounce 1.3s linear; */
+  animation: modal-rotate .8s linear;
+}
+
+@keyframes modal-bounce {
+  0% {
+    transform: translate(-50%, -2000px);
+  }
+
+  50% {
+    transform: translate(-50%, 60%);
+  }
+
+  75% {
+    transform: translate(-50%, -70%);
+  }
+
+  100%{
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes modal-rotate {
+  0% {
+    top: 0;
+    left: 0;
+    transform: rotate(0deg) translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  100%{
+
+    top: 50%;
+    left: 50%;
+    transform: rotate(360deg) translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+.modal__close-btn {
+  position: fixed;
+  top: 5%;
+  right: 3%;
+
+
+  outline: none;
+
+  width: 30px;
+  height: 30px;
+
+  background-color: transparent;
+  border: none;
+  border: 1px solid var(--page-header-color);
+  cursor: pointer;
+  z-index: 99999;
+}
+
+.modal__close-btn::before,
+.modal__close-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 25%;
+
+  width: 14px;
+  height: 2px;
+
+  background-color: var(--page-header-color);
+  outline: none;
+  transform: translate(-50%, -50%);
+}
+
+.modal__close-btn::before {
+  transform: rotate(45deg);
+}
+
+.modal__close-btn::after {
+  transform: rotate(-45deg);
 }
 
 .modal__content {
-  position: absolute;
+  padding: 0 15px;
+  margin: 5vh auto 2vh;
+  width: 70%;
 }
 
-.modal__close-btn {
-  position: absolute;
+@media screen and (min-width: 1650px) {
+  .modal__content {
+    font-size: 1.35rem;
+  }
 }
+
 
 .modal__text {
   margin: 0;
   padding: 5px;
+}
+
+.modal__hire-btn {
+  position: absolute;
+  top: 85%;
+  right: 15%;
+  text-decoration: none;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--page-header-color);
+  color: var(--page-header-color);
+}
+
+@media screen and (max-height: 650px) {
+  .modal__hire-btn {
+    position: static;
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+
+.no-touch .modal__hire-btn:hover {
+  text-decoration: underline;
+}
+
+.no-touch .modal__hire-btn:hover {
+  text-decoration: underline;
+}
+
+.modal__hire-btn:active {
+  color: var(--page-header-color-active);
+  border-color: var(--page-header-color-active);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: var(--modal-overlay-color);
+  cursor: pointer;
 }
 
 .is-close {
