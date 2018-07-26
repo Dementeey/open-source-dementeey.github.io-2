@@ -1,9 +1,10 @@
 // vars
-const html = document.documentElement;
-const aboutMeBtn = document.querySelector('.about-me');
+const html          = document.documentElement;
+const aboutMeBtn    = document.querySelector('.about-me');
 const aboutCloseBtn = document.querySelector('.modal__close-btn');
-const modal = document.querySelector('.modal');
-const modalOverlay = document.querySelector('.modal-overlay');
+const modal         = document.querySelector('.modal');
+const modalOverlay  = document.querySelector('.modal-overlay');
+const goToTop       = document.querySelector('.goToTop-btn');
 
 
 // functions
@@ -39,4 +40,18 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     aboutMeToggle();
   }
+})
+goToTop.addEventListener('click', () => {
+  html.scrollTop = 0;
+  this.style.opacity = 0;
+});
+
+document.addEventListener('scroll', () => {
+  const scrollTop = html.scrollTop;
+
+  if (scrollTop >= 645) {
+    return goToTop.style.opacity = 1;
+  }
+
+  return goToTop.style.opacity = 0;
 })
