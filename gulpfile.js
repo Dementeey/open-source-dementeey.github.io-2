@@ -45,7 +45,7 @@ const configServer = {
   server: {
     baseDir: "./build"
   },
-  tunnel: false,   // ВКЛ\ВЫКЛ  временный адрес для просмотра вне локальной сети
+  tunnel: true,   // ВКЛ\ВЫКЛ  временный адрес для просмотра вне локальной сети
   host: 'localhost',
   port: 9000,
   logPrefix: "FrontendDevil"
