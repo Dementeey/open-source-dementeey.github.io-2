@@ -37,7 +37,7 @@ const aboutMeToggle = () => {
   return
 };
 const goToTopToggle = (scroll) => {
-  var innerHeight = html.clientHeight;
+  const innerHeight = html.clientHeight;
   if (scroll === 0) {
     goToTop.style.zIndex = -1;
     goToTop.style.opacity = 0;
