@@ -10,6 +10,19 @@ const headerTop     = document.querySelector('.page-header__top');
 
 
 // functions
+let timers;
+const scrolledTop = () => {
+  const top = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+
+  if (top > 0) {
+    window.scrollTo( 0, Math.floor(top /1.7) );
+    timers = setTimeout("scrolledTop()", 30);
+  } else {
+    clearTimeout(timers);
+  }
+
+  return false;
+}
 const aboutMeToggle = () => {
   if ( !modal.classList.contains('is-close') ) {
     modal.classList.add('is-close');
@@ -24,11 +37,12 @@ const aboutMeToggle = () => {
   return
 };
 const goToTopToggle = (scroll) => {
+  var innerHeight = html.clientHeight;
   if (scroll === 0) {
     goToTop.style.zIndex = -1;
     goToTop.style.opacity = 0;
     return
-  } else if (scroll >= 345) {
+  } else if (scroll >= innerHeight) {
     goToTop.style.zIndex = 1;
     goToTop.style.opacity = 1;
     return
@@ -45,7 +59,9 @@ const headerTopToggle = (scroll) => {
   return headerTop.classList.remove('page-header__top--scroll-fixed');
 };
 
+
 // events
+goToTop.addEventListener('click', scrolledTop);
 document.addEventListener('DOMContentLoaded', () => {
   // eslint-disable-next-line
   if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
@@ -65,12 +81,12 @@ document.addEventListener('keydown', (e) => {
     aboutMeToggle();
   }
 });
-goToTop.addEventListener('click', () => {
-  html.scrollTop = 0;
-});
-document.addEventListener('scroll', () => {
-  const scrollTop = html.scrollTop;
 
-  goToTopToggle(scrollTop);
-  headerTopToggle(scrollTop);
+document.addEventListener('DOMContentLoaded',headerTopToggle);
+document.addEventListener('scroll', () => {
+  const scroll = window.pageYOffset;
+
+  goToTopToggle(scroll);
+  headerTopToggle(scroll);
+
 });

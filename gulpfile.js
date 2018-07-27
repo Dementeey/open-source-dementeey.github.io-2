@@ -21,22 +21,24 @@ const path = {
     js: './build/js/',
     css: 'build/css/',
     img: 'build/img/',
-    svg: 'build/img/'
+    svg: 'build/img/',
+    work: 'build/work/'
   },
   src: {                                    // Пути откуда брать исходники
     html: 'src/*.html',                  // Синтаксис src/**/*.html говорит gulp что мы хотим взять все файлы с расширением .html из всех папок после src
     js: 'src/js/*.js',
     style: 'src/css/*.css',
     img: 'src/img/**/*.+(png|jpg)',             // Синтаксис img/**/*.* означает - взять все файлы всех расширений
-    svg: 'src/img/**/*.svg'           // Синтаксис img/**/*.* означает - взять все файлы всех расширений
-
+    svg: 'src/img/**/*.svg',           // Синтаксис img/**/*.* означает - взять все файлы всех расширений
+    work: 'src/work/**/*.*'
   },
   watch: {                                  // Тут мы укажем, за изменением каких файлов мы хотим наблюдать
     html: 'src/*.html',
     js: 'src/js/*.js',
     style: 'src/css/*.css',
     img: 'src/img/**/*.+(png|jpg)',
-    svg: 'src/img/**/*.svg'
+    svg: 'src/img/**/*.svg',
+    work: 'src/work/**/*.*'
   },
   clean: './build'
 };
@@ -122,13 +124,20 @@ gulp.task('imageSvg:build', function () {
     .pipe(reload({stream: true}));
 });
 
+gulp.task('work:build', function () {
+  gulp.src(path.src.work)
+    .pipe(gulp.dest(path.build.work))
+    .pipe(reload({stream: true}));
+});
+
 
 gulp.task('build', [
   'html:build',
   'js:build',
   'style:build',
   'image:build',
-  'imageSvg:build'
+  'imageSvg:build',
+  'work:build'
 ]);
 
 gulp.task('watch', function(){
@@ -146,6 +155,9 @@ gulp.task('watch', function(){
   });
   watch([path.watch.svg], function(event, cb) {
     gulp.start('imageSvg:build');
+  });
+  watch([path.watch.work], function(event, cb) {
+    gulp.start('work:build');
   });
 });
 
