@@ -6,7 +6,7 @@ const modal         = document.querySelector('.modal');
 const modalOverlay  = document.querySelector('.modal-overlay');
 const goToTop       = document.querySelector('.goToTop-btn');
 const headerTop     = document.querySelector('.page-header__top');
-
+const header        = document.querySelector('.page-header');
 
 
 // functions
@@ -53,7 +53,10 @@ const goToTopToggle = (scroll) => {
   return
 };
 const headerTopToggle = (scroll) => {
-  if (scroll > 620) {
+  const headerHeight = header.clientHeight;
+  const headerTopHeight = headerTop.clientHeight;
+
+  if (scroll > (headerHeight - headerTopHeight) ) {
     return headerTop.classList.add('page-header__top--scroll-fixed');
   }
   return headerTop.classList.remove('page-header__top--scroll-fixed');
